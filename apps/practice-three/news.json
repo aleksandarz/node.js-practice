@@ -1,0 +1,18 @@
+
+[
+  {
+    "title": "Node.js Update",
+    "description": "New features released",
+    "createdAt": "2026-02-05"
+  },
+  {
+    "title": "Server Running",
+    "description": "Local server started",
+    "createdAt": "2026-02-04"
+  },
+  {
+    "title": "Learning Progress",
+    "description": "Basics completed",
+    "createdAt": "2026-02-03"
+  }
+]
