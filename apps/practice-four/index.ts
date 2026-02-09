@@ -21,15 +21,27 @@ const server = http.createServer((req, res) => {
       return;
     }
 
-    let users = JSON.parse(fs.readFileSync(filePath, "utf8"));
-    let userExists = false;
+    if (data.email.trim() === "" || !data.email.includes("@")) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      const emailJsonResponse = JSON.stringify({ success: false, message: "Invalid email" });
+      res.end(emailJsonResponse);
+      return;
+    }
 
-    users.forEach(user => {
-      if (user.email === data.email) {
-        userExists = true;
-      }
-    });
+    if (data.password.length < 6) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      const passwordJsonResponse = JSON.stringify({ success: false, message: "Password is to short" });
+      res.end(passwordJsonResponse);
+      return;
+    }
 
+    let users = [];
+    if (fs.existsSync(filePath)) {
+      const fileContent = fs.readFileSync(filePath, "utf8");
+      users = fileContent.trim() ? JSON.parse(fileContent) : [];
+    }
+
+    let userExists = users.some((user) => user.email.toLowerCase() === data.email.toLowerCase());
     if (userExists) {
       res.writeHead(409, { "Content-Type": "application/json" });
       const jsonExistsResponse = JSON.stringify({ success: false, message: "User already exists" });
@@ -37,12 +49,24 @@ const server = http.createServer((req, res) => {
       return;
     }
 
-    users.push(data);
+    const createdAt = new Date().toISOString();
+    users.push({
+      email: data.email,
+      password: data.password,
+      createdAt: createdAt,
+    });
 
     fs.writeFileSync(filePath, JSON.stringify(users));
 
     res.writeHead(200, { "Content-Type": "application/json" });
-    const jsonSuccessResponse = JSON.stringify({ success: true, message: "User was added successfully" });
+    const jsonSuccessResponse = JSON.stringify({
+      success: true,
+      message: "User was added successfully",
+      user: {
+        email: data.email,
+        createdAt: createdAt,
+      }
+    });
     res.end(jsonSuccessResponse);
   });
 
