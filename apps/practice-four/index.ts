@@ -21,10 +21,22 @@ const server = http.createServer((req, res) => {
       return;
     }
 
-    console.log(data.email);
-    console.log(data.password);
-
     let users = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    let userExists = false;
+
+    users.forEach(user => {
+      if (user.email === data.email) {
+        userExists = true;
+      }
+    });
+
+    if (userExists) {
+      res.writeHead(409, { "Content-Type": "application/json" });
+      const jsonExistsResponse = JSON.stringify({ success: false, message: "User already exists" });
+      res.end(jsonExistsResponse);
+      return;
+    }
+
     users.push(data);
 
     fs.writeFileSync(filePath, JSON.stringify(users));
