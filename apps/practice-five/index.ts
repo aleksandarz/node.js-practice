@@ -7,11 +7,13 @@ const path = require("path");
 const server = http.createServer((req, res) => {
 
   const filePath = path.join(__dirname, "index.html");
-  const navPath = path.join(__dirname, "navigation.html");
+  const navPath = path.join(__dirname, "html", "navigation.html");
+  const footerPath = path.join(__dirname, "html", "footer.html");
 
   fs.readFile(filePath, "utf8", async (err, data) => {
 
     const nav = fs.readFileSync(navPath, "utf8");
+    const footer = fs.readFileSync(footerPath, "utf8");
 
     if (err) {
       res.writeHead(500, { "Content-Type": "text/html" });
@@ -30,6 +32,7 @@ const server = http.createServer((req, res) => {
       .replace("{{ height }}", variables.height);
 
     result = result.replace("{{ navigation }}", nav);
+    result = result.replace("{{ footer }}", footer);
 
     const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
     await logUserVisit(ip);
