@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "product": "iPhone 17 Pro",
+    "price": 1600,
+    "available": true
+  },
+  {
+    "id": 2,
+    "product": "Samsung Galaxy S25",
+    "price": 1400,
+    "available": true
+  },
+  {
+    "id": 3,
+    "product": "MacBook Air M4",
+    "price": 1800,
+    "available": false
+  },
+  {
+    "id": 4,
+    "product": "Dell XPS 15",
+    "price": 1700,
+    "available": true
+  },
+  {
+    "id": 5,
+    "product": "iPad Pro 13",
+    "price": 1200,
+    "available": false
+  },
+  {
+    "id": 6,
+    "product": "Sony WH-1000XM6",
+    "price": 450,
+    "available": true
+  },
+  {
+    "id": 7,
+    "product": "Apple Watch Series 11",
+    "price": 600,
+    "available": false
+  },
+  {
+    "id": 8,
+    "product": "PlayStation 6",
+    "price": 900,
+    "available": true
+  },
+  {
+    "id": 9,
+    "product": "Samsung 65\" OLED TV",
+    "price": 2200,
+    "available": true
+  },
+  {
+    "id": 10,
+    "product": "Logitech MX Master 4",
+    "price": 150,
+    "available": false
+  }
+]
