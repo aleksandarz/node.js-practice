@@ -33,10 +33,26 @@ const server = http.createServer((req, res) => {
         return res.end("Not Found");
       }
 
-      const response = JSON.parse(jsonResponse).filter(item => item.available === true);
+      let response = JSON.parse(jsonResponse);
 
-      res.writeHead(200, { "Content-Type": "application/json" });
-      return res.end(JSON.stringify(response));
+      if (req.url.endsWith("not-available"))
+      {
+        response = JSON.parse(jsonResponse).filter(item => item.available === false);
+        res.writeHead(200, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify(response));
+      }
+      else if (req.url.endsWith("available"))
+      {
+        response = JSON.parse(jsonResponse).filter(item => item.available === true);
+        res.writeHead(200, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify(response));
+      }
+      else
+      {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify(response));
+      }
+
     });
 
     return;
